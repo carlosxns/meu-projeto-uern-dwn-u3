@@ -1,0 +1,11 @@
+{
+  "name": "meu-projeto-frontend",
+  "version": "1.0.0",
+  "description": "Testes de frontend com Jest",
+  "scripts": {
+    "test": "jest"
+  },
+  "devDependencies": {
+    "jest": "^29.0.0"
+  }
+}

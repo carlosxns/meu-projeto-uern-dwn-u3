@@ -1,0 +1,1 @@
+{"version":1,"defects":[],"times":{"Tests\\Backend\\ClienteRepositoryTest::testPodeCriarCliente":0.159,"Tests\\Backend\\ClienteRepositoryTest::testPodeExcluirCliente":0.138,"Tests\\Backend\\ClienteRepositoryTest::testPodeAtualizarClienteSemMudarSenha":0.156,"Tests\\Backend\\ClienteRepositoryTest::testBuscaPaginacaoEContagemFunciona":1.092}}

@@ -1,0 +1,23 @@
+CREATE TABLE IF NOT EXISTS clientes (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nome VARCHAR(50) NOT NULL,
+    email VARCHAR(100) NOT NULL,
+    cpf VARCHAR(14) NOT NULL,
+    telefone VARCHAR(15) NOT NULL,
+    usuario VARCHAR(50) NOT NULL,
+    senha VARCHAR(255) NOT NULL,
+    idade INT(3) NOT NULL,
+    data_nascimento DATE,
+    sexo VARCHAR(20),
+    estado_civil VARCHAR(20),
+    pais VARCHAR(50),
+    cep VARCHAR(9),
+    tipo_logradouro VARCHAR(20),
+    logradouro VARCHAR(255),
+    bairro VARCHAR(100),
+    cidade VARCHAR(100),
+    estado VARCHAR(50),
+    interesses TEXT,
+    info_complementares TEXT,
+    data_cadastro TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
