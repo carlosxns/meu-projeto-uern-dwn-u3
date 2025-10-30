@@ -32,7 +32,7 @@ Para executar este projeto em uma máquina local para desenvolvimento:
 
 1.  **Clone o repositório:**
     ```bash
-    git clone [https://github.com/](https://github.com/)carlosxns/meu-projeto-uern-dwn-u3.git
+    git clone https://github.com/carlosxns/meu-projeto-uern-dwn-u3.git
     cd meu-projeto-crud-php
     ```
 2.  **Instale as dependências:**
