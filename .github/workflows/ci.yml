@@ -1,0 +1,91 @@
+name: Pipeline de CI/CD - PHP CRUD com MySQL
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build-and-test:
+    name: Compilar e Testar
+    runs-on: ubuntu-latest
+    
+    # Inicia um serviço de banco de dados MySQL
+    services:
+      mysql:
+        image: mysql:8.0
+        ports:
+          - 3306:3306
+        env:
+          MYSQL_ROOT_PASSWORD: root # Senha que nossos testes usarão
+          MYSQL_DATABASE: banco_de_dados_teste # Cria o banco de teste automaticamente
+        options: >-
+          --health-cmd="mysqladmin ping -h localhost -u root -proot"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=3
+
+    steps:
+      - name: Checkout do código
+        uses: actions/checkout@v4
+
+      - name: Configurar PHP (usando sua versão 8.3)
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.3'
+          extensions: mbstring, mysqli, dom # Adiciona a extensão 'dom' que faltava
+          coverage: none
+
+      - name: Instalar dependências (Composer)
+        run: composer install --prefer-dist --no-progress
+
+      - name: Configurar Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          cache: 'npm'
+
+      - name: Instalar dependências (NPM)
+        run: npm install
+
+      - name: Preparar o Banco de Teste (Criar Tabela)
+        run: |
+          sleep 5 # Espera o MySQL estabilizar
+          mysql -h 127.0.0.1 -u root -proot -D banco_de_dados_teste < tabela_clientes.sql
+        env:
+          MYSQL_PWD: root
+
+      - name: Rodar testes PHPUnit (Unit e Integração)
+        env:
+          # Define as variáveis de ambiente que o PHPUnit (setUp) espera
+          DB_HOST: 127.0.0.1
+          DB_PORT: 3306
+          DB_USER: root
+          DB_PASS: root
+          DB_NAME: banco_de_dados_teste
+        run: ./vendor/bin/phpunit
+
+      - name: Rodar testes Jest
+        run: npm test
+
+  deploy-para-ec2:
+    name: Deploy na EC2
+    needs: build-and-test # Só executa se os testes passarem
+    runs-on: ubuntu-latest
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main' # Só em push no 'main'
+
+    steps:
+      - name: Conectar via SSH e fazer Deploy
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USER }}
+          key: ${{ secrets.EC2_SSH_KEY }}
+          script: |
+            cd /var/www/html
+            git pull origin main
+            composer install --no-dev --optimize-autoloader
+            # Corrigindo a permissão do usuário 'ubuntu' para o 'www-data' (servidor web)
+            sudo chown -R www-data:www-data /var/www/html
+            sudo systemctl restart nginx
