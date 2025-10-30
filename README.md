@@ -1,6 +1,6 @@
 # Sistema CRUD de Clientes com PHP, MySQL e CI/CD na AWS EC2
 
-[![Status do CI/CD](https://github.com/[SEU_USUÁRIO/SEU_REPOSITÓRIO]/actions/workflows/ci.yml/badge.svg)](https://github.com/carlosxns/meu-projeto-uern-dwn-u3/actions)
+[![Status do CI/CD](https://github.com/carlosxns/meu-projeto-uern-dwn-u3/actions/workflows/ci.yml/badge.svg)](https://github.com/carlosxns/meu-projeto-uern-dwn-u3/actions)
 
 Este projeto é uma aplicação web CRUD (Create, Read, Update, Delete) completa para gerenciamento de clientes. Foi construída utilizando uma pilha LEMP (Linux, Nginx, MySQL, PHP) e implantada em uma instância AWS EC2.
 
@@ -32,7 +32,7 @@ Para executar este projeto em uma máquina local para desenvolvimento:
 
 1.  **Clone o repositório:**
     ```bash
-    git clone [https://github.com/](https://github.com/)[SEU_USUÁRIO/SEU_REPOSITÓRIO].git
+    git clone [https://github.com/](https://github.com/)carlosxns/meu-projeto-uern-dwn-u3.git
     cd meu-projeto-crud-php
     ```
 2.  **Instale as dependências:**
