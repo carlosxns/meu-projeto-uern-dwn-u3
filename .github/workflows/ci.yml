@@ -2,15 +2,15 @@ name: Pipeline de CI/CD - PHP CRUD com MySQL
 
 on:
   push:
-    branches: [ "main" ]
+    branches: ["main"]
   pull_request:
-    branches: [ "main" ]
+    branches: ["main"]
 
 jobs:
   build-and-test:
     name: Compilar e Testar
     runs-on: ubuntu-latest
-    
+
     # Inicia um serviço de banco de dados MySQL
     services:
       mysql:
@@ -33,7 +33,7 @@ jobs:
       - name: Configurar PHP (usando sua versão 8.3)
         uses: shivammathur/setup-php@v2
         with:
-          php-version: '8.3'
+          php-version: "8.3"
           extensions: mbstring, mysqli, dom # Adiciona a extensão 'dom' que faltava
           coverage: none
 
@@ -43,8 +43,8 @@ jobs:
       - name: Configurar Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '18'
-          cache: 'npm'
+          node-version: "18"
+          cache: "npm"
 
       - name: Instalar dependências (NPM)
         run: npm install
@@ -84,8 +84,11 @@ jobs:
           key: ${{ secrets.EC2_SSH_KEY }}
           script: |
             cd /var/www/html
+            # 1. Torna o 'ubuntu' (usuário do deploy) o dono da pasta
+            sudo chown -R ubuntu:ubuntu .
+            # 2. Agora o Git e o Composer têm permissão para rodar
             git pull origin main
             composer install --no-dev --optimize-autoloader
-            # Corrigindo a permissão do usuário 'ubuntu' para o 'www-data' (servidor web)
-            sudo chown -R www-data:www-data /var/www/html
+            # 3. Devolve a posse para o servidor web (Nginx/PHP)
+            sudo chown -R www-data:www-data .
             sudo systemctl restart nginx
