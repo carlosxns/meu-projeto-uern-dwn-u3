@@ -7,15 +7,21 @@
   </head>
   <body>
     <main>
-      <h1>Cadastro de Cliente</h1>
-      
-      <a href="consultar.php" class="btn-primary" style="margin-bottom: 20px; display: inline-block;">Ver Clientes Cadastrados</a>
+      <h1>TESTE DE ENSAIO</h1>
+
+      <a
+        href="consultar.php"
+        class="btn-primary"
+        style="margin-bottom: 20px; display: inline-block"
+        >Ver Clientes Cadastrados</a
+      >
       <form
         id="cadastroForm"
         action="cadastraCliente.php"
         method="post"
         novalidate
-        enctype="multipart/form-data" >
+        enctype="multipart/form-data"
+      >
         <fieldset>
           <legend>Dados Pessoais:</legend>
           <div>
@@ -147,7 +153,8 @@
           <div>
             <p>
               Seleção de Interesses:
-              <select name="interesse[]" id="interesse" multiple size="4"> <option value="filmes">Filmes</option>
+              <select name="interesse[]" id="interesse" multiple size="4">
+                <option value="filmes">Filmes</option>
                 <option value="informatica">Informática</option>
                 <option value="games">Games</option>
                 <option value="livros">Livros</option>
@@ -158,7 +165,8 @@
             <textarea name="inforcomple" rows="5" cols="30"></textarea>
             <p>Anexar um ou mais arquivos:</p>
             <p>
-              <input type="file" name="arquivos[]" multiple /> </p>
+              <input type="file" name="arquivos[]" multiple />
+            </p>
           </div>
         </fieldset>
 
@@ -173,7 +181,6 @@
         const form = document.getElementById("cadastroForm");
 
         form.addEventListener("submit", (event) => {
-          
           const requiredFields = form.querySelectorAll("[required]");
           for (const field of requiredFields) {
             const label = document.querySelector(`label[for=${field.id}]`);
@@ -208,7 +215,7 @@
             senhaInput.focus();
             return;
           }
-          
+
           // Se chegou aqui, a validação passou!
           alert("Formulário validado! Enviando para o servidor... ✅");
         });
